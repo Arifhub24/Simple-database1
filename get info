@@ -1,0 +1,18 @@
+
+while True:
+    add_user = input('Add (Y,N):  ')
+    while add_user.upper() not in ('Y', 'N'):
+        add_user = input('Add (Y,N): ')
+    if add_user.upper() == 'N':
+        print('Programm Finished')
+        break
+    userName = input('User Name: ')
+    userAge = input('User Age: ')
+    userId = int(input('User Id: '))
+    userEmail = input('User Email: ')
+    userPassword = input('Password: ')
+
+    user_info = f"{userName},{userAge},{userEmail},{userPassword},{userId}\n"
+    with open('dataFile2.txt', 'a') as file_object:
+        file_object.write(user_info)
+
