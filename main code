@@ -1,1 +1,120 @@
 
+import customtkinter
+
+# _____________________________________ Author : Arif Aliyar ____________________________________________
+
+# this file is a gui implementation of a very simple database
+# it needs a txt file in which imformation of people in format bellow should be stored
+#           Name,Last Name,Age,Email Address,password,id number
+
+# ___________________________ import Database
+Users = {}
+with open('dataFile2.txt', 'r') as file_object:
+    lines = file_object.readlines()
+    for line in lines:
+        l = list(line.split(','))
+        Users[l[0]] = l
+print(Users)
+
+# ________________________ setting GUI Features ___________________________________________
+
+customtkinter.set_default_color_theme('dark-blue')
+customtkinter.set_appearance_mode('light')
+
+# _______________________________ Global vaiables area _________________________________
+root = None
+searchEntry = None
+showLabel = None
+
+
+# ______________________ start of button functions area ____________________________________
+def showAll():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        name_last = 'name : ' +info[0] + ' ' + info[1] + '\n'
+        age = 'age : ' + info[2] + '\n'
+        email = 'email : ' + info[3] + '\n'
+        id = 'id number : '+ info[5] + '\n'
+        password = 'password : ' + info[4] + '\n'
+        full_info = name_last + age + email + id + password
+        showLabel.configure(text=full_info)
+
+    else:
+        showLabel.configure(text='Unknown User')
+
+def show_name():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        showLabel.configure(text=info[0] + ' '+ info[1])
+    else:
+        showLabel.configure(text='Unknown User')
+
+def show_email():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        showLabel.configure(text=info[3])
+    else:
+        showLabel.configure(text='Unknown User')
+
+def show_password():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        showLabel.configure(text=info[4])
+    else:
+        showLabel.configure(text='Unknown User')
+
+def show_id():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        showLabel.configure(text=info[5])
+    else:
+        showLabel.configure(text='Unknown User')
+
+def show_age():
+    text = searchEntry.get()
+    if text in Users.keys():
+        info = Users[text]
+        showLabel.configure(text=info[2])
+    else:
+        showLabel.configure(text='Unknown User')
+
+
+
+# _________________________ GUI area ______________________________________
+def main():
+    global root, searchEntry, showLabel
+    root = customtkinter.CTk()
+    root.geometry('720x400+300+200')
+    searchEntry = customtkinter.CTkEntry(root, 400, 50, corner_radius=30, fg_color='orange',placeholder_text = 'name to search for')
+    searchEntry.pack(pady=10)
+
+    buttonShowAll = customtkinter.CTkButton(root,text="Show All", corner_radius=30,command=showAll)
+    buttonShowAll.pack(pady=10)
+
+    buttonshowName = customtkinter.CTkButton(root, text='Show Name', corner_radius=30,command=show_name)
+    buttonshowName.pack(pady=10)
+
+    buttonShowEmail = customtkinter.CTkButton(root, text='Show Email', corner_radius=30,command=show_email)
+    buttonShowEmail.pack(pady=10)
+
+    buttonShowId = customtkinter.CTkButton(root, text='Show Id', corner_radius=30,command=show_id)
+    buttonShowId.pack(pady=10)
+
+    buttonShowPassword = customtkinter.CTkButton(root, text='Show Password', corner_radius=30,command=show_password)
+    buttonShowPassword.pack(pady=10)
+
+    showLabel = customtkinter.CTkLabel(root,text='I will show info')
+    showLabel.pack(pady=20)
+
+    root.mainloop()
+
+
+# _________________________ RUN POINT ____________________________________
+
+if __name__ == '__main__':
+    main()
